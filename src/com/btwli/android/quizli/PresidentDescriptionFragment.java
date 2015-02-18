@@ -11,14 +11,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewAnimator;
 
 public class PresidentDescriptionFragment extends Fragment {
 
 	private ImageView mPresidentImage;
 	private TextView mPresidentTextView;
 	private QuizQuestion mQuestion;
+	private Animation slide_in_left1;
+	private ViewAnimator viewPresidentAnimator;
 	UUID questionId;
 
 	public static final String EXTRA_QUESTION_ID = "com.firstapp.android.picturealbum.question_id";
@@ -53,6 +58,14 @@ public class PresidentDescriptionFragment extends Fragment {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
+
+		viewPresidentAnimator = (ViewAnimator) v
+				.findViewById(R.id.view_animator_president);
+		slide_in_left1 = AnimationUtils.loadAnimation(getActivity(),
+				android.R.anim.slide_in_left);
+		viewPresidentAnimator.setInAnimation(slide_in_left1);
+
+		viewPresidentAnimator.showNext();
 		return v;
 	}
 

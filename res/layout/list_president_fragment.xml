@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/image_list_layout_anim"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/hd_blue_back"
+    android:background="@drawable/usa_list_flag"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -21,42 +22,16 @@
             android:layout_height="wrap_content"
             android:text="@string/president"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
+            android:textColor="#FFFF00"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/successor_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="@string/successor_text_view"
-        android:textColor="#FFFF00"
-        android:textSize="25sp"
-        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp" >
-
-        <ImageView
-            android:id="@+id/president_successor_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/abc_ab_bottom_solid_light_holo" />
-
-        <TextView
-            android:id="@+id/president_successor_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/successor"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -64,7 +39,7 @@
         android:id="@+id/textNextOnList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="250dp"
         android:text="@string/next_on_the_list"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFF00"

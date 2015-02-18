@@ -18,30 +18,25 @@ public class QuizLiLab {
 		mListQuestionBank.add(new QuizQuestion(R.string.qeustion_president_1,
 				R.drawable.george_washington, R.drawable.jhon_adams,
 				R.drawable.franklin_roosevelt,
-				R.string.george_washington_description,
-				R.string.jhon_adams_description));
+				R.string.george_washington_description));
 
 		mListQuestionBank.add(new QuizQuestion(R.string.qeustion_president_2,
 				R.drawable.thomas_jeferson, R.drawable.james_madison,
-				R.drawable.jhon_adams, R.string.thomas_jeferson_description,
-				R.string.james_madison_description));
+				R.drawable.jhon_adams, R.string.thomas_jeferson_description));
 
 		mListQuestionBank.add(new QuizQuestion(R.string.qeustion_president_3,
 				R.drawable.franklin_roosevelt, R.drawable.harry_truman,
 				R.drawable.thomas_jeferson,
-				R.string.franklin_roosevelt_description,
-				R.string.harry_truman_description));
+				R.string.franklin_roosevelt_description));
 
 		mListQuestionBank.add(new QuizQuestion(R.string.qeustion_president_4,
 				R.drawable.ronald_reagan, R.drawable.g_w_bush,
 				R.drawable.george_washington,
-				R.string.ronald_reagan_description,
-				R.string.g_w_bush_description));
+				R.string.ronald_reagan_description));
 
 		mListQuestionBank.add(new QuizQuestion(R.string.qeustion_president_5,
 				R.drawable.jhon_adams, R.drawable.thomas_jeferson,
-				R.drawable.ronald_reagan, R.string.jhon_adams_description,
-				R.string.thomas_jeferson_description));
+				R.drawable.ronald_reagan, R.string.jhon_adams_description));
 
 	}
 

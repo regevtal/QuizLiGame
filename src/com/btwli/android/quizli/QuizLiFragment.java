@@ -3,7 +3,10 @@ package com.btwli.android.quizli;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +19,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
 
@@ -25,23 +29,25 @@ public class QuizLiFragment extends Fragment {
 	private static final String TAG = "QuizLiFragment";
 	public static final String EXTRA_QUIZ_ID = "com.firstapp.android.picturealbum.quiz_id";
 	private TextView mTextQuestionView;
-	private ImageView mImageQuestionView;
-	private ImageView mAnswerViewOne;
-	private ImageView mAnswerViewTwo;
-	private ImageView mAnswerViewThree;
+	private ImageView mImageView;
+	private ImageView mImageViewXwrongOrVrightAnswer;
+	private ImageView mAnswerViewButtonOne;
+	private ImageView mAnswerViewButtonTwo;
+	private ImageView mAnswerViewButtonThree;
 	private ImageButton mNextImageButton;
 	private Drawable mTrueDrwPresident1;
 	private Drawable mDrwPresident2;
 	private Drawable mDrwPresident3;
+	private Drawable mWorngXanswer;
+	private Drawable mRightgXanswer;
 	private ArrayList<QuizQuestion> mQuestionBank;
+	private AnimationDrawable flagAnimation;
+	private Animation slide_in_left1;
+	private ViewAnimator viewPresidentAnimator;
+	private AlertDialog alertWorngAnswer;
 	private int mCurrentIndex = 0;;
 	private boolean mCorrectAnswerIsTrue = false;
-	private ViewAnimator viewAnimator1;
-	private ViewAnimator viewAnimator2;
-	private ViewAnimator viewAnimator3;
-	Animation slide_in_left1;
-	Animation slide_in_left2;
-	Animation slide_in_left3;
+	private int mScore = 0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,16 +60,30 @@ public class QuizLiFragment extends Fragment {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_quiz, parent, false);
 
-		mImageQuestionView = (ImageView) v.findViewById(R.id.image_president);
-		mImageQuestionView.setImageDrawable(getResources().getDrawable(
+		LinearLayout animImageFlag = (LinearLayout) v
+				.findViewById(R.id.fragment_quiz_usa_flag_anim);
+		// anim flag background
+		animImageFlag.setBackgroundResource(R.drawable.usa_flag_anim);
+		flagAnimation = (AnimationDrawable) animImageFlag.getBackground();
+		flagAnimation.start();
+
+		mImageViewXwrongOrVrightAnswer = (ImageView) v
+				.findViewById(R.id.image_x_or_v_answer);
+		mImageViewXwrongOrVrightAnswer.setImageDrawable(null);
+		mImageViewXwrongOrVrightAnswer.setAlpha(100);
+
+		mImageView = (ImageView) v.findViewById(R.id.image_president);
+		mImageView.setImageDrawable(getResources().getDrawable(
 				R.drawable.question_mark));
-		mImageQuestionView.setOnTouchListener(new View.OnTouchListener() {
+
+		mImageView.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -85,45 +105,54 @@ public class QuizLiFragment extends Fragment {
 		updateQuestion();
 
 		// First answer possible
-		mAnswerViewOne = (ImageView) v.findViewById(R.id.image_answer_1);
+		mAnswerViewButtonOne = (ImageView) v
+				.findViewById(R.id.image_list_layout_anim);
 		updatePresident();
-		mAnswerViewOne.setOnTouchListener(new View.OnTouchListener() {
+		mAnswerViewButtonOne.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 
-				mImageQuestionView.setImageDrawable(mTrueDrwPresident1);
+				viewPresidentAnimator.showNext();
+				mImageView.setImageDrawable(mTrueDrwPresident1);
+				mRightgXanswer = getResources().getDrawable(
+						R.drawable.v_right_answer);
+				mImageViewXwrongOrVrightAnswer.setImageDrawable(mRightgXanswer);
 				mCorrectAnswerIsTrue = true;
+				mNextImageButton.setVisibility(View.VISIBLE);
 				return true;
 			}
 		});
 
 		// ------------------------------------------------------------------------------------------------------
-		mAnswerViewTwo = (ImageView) v.findViewById(R.id.image_answer_2);
-		mAnswerViewThree = (ImageView) v.findViewById(R.id.image_answer_3);
+		mAnswerViewButtonTwo = (ImageView) v.findViewById(R.id.image_answer2);
+		mAnswerViewButtonThree = (ImageView) v.findViewById(R.id.image_answer3);
 		updateWrongImage();
 
-		mAnswerViewTwo.setOnTouchListener(new View.OnTouchListener() {
+		mAnswerViewButtonTwo.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-
-				mImageQuestionView.setImageDrawable(getResources().getDrawable(
-						R.drawable.wrong_answer));
+				viewPresidentAnimator.showNext();
+				mImageView.setImageDrawable(mDrwPresident2);
+				setWrongAnswer();
+				getAlertWrongMessage();
+				mScore = mScore + 1;
 				mCorrectAnswerIsTrue = false;
 
 				return true;
 			}
 		});
 
-		mAnswerViewThree.setOnTouchListener(new View.OnTouchListener() {
+		mAnswerViewButtonThree.setOnTouchListener(new View.OnTouchListener() {
 
 			@SuppressLint("ClickableViewAccessibility")
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				mImageQuestionView.setImageDrawable(getResources().getDrawable(
-						R.drawable.wrong_answer));
+				viewPresidentAnimator.showNext();
+				mImageView.setImageDrawable(mDrwPresident3);
+				setWrongAnswer();
+				getAlertWrongMessage();
 				mCorrectAnswerIsTrue = false;
-
 				return true;
 			}
 		});
@@ -139,40 +168,27 @@ public class QuizLiFragment extends Fragment {
 
 					Intent i = new Intent(getActivity(),
 							ListOfPresidentActivity.class);
+
 					startActivity(i);
 
 				} else {
 					mCurrentIndex = mCurrentIndex + 1;
 				}
-				viewAnimator1.showNext();
-				viewAnimator2.showNext();
-				viewAnimator3.showNext();
+
 				updateQuestion();
 				updatePresident();
 				updateWrongImage();
-
-				mImageQuestionView.setImageDrawable(getResources().getDrawable(
-						R.drawable.question_mark));
+				clearForTheNextQuestion();
 
 			}
 		});
 
-		viewAnimator1 = (ViewAnimator) v.findViewById(R.id.view_animator_1);
-
-		slide_in_left1 = AnimationUtils.loadAnimation(getActivity(),
-				android.R.anim.slide_in_left);
-		viewAnimator1.setInAnimation(slide_in_left1);
-
-		viewAnimator2 = (ViewAnimator) v.findViewById(R.id.view_animator_2);
-		slide_in_left2 = AnimationUtils.loadAnimation(getActivity(),
-				android.R.anim.slide_in_left);
-
-		viewAnimator3 = (ViewAnimator) v.findViewById(R.id.view_animator_3);
-		slide_in_left3 = AnimationUtils.loadAnimation(getActivity(),
-				android.R.anim.slide_in_left);
+		viewPresidentAnimator = (ViewAnimator) v
+				.findViewById(R.id.view_president_animator);
+		setAnimation();
 
 		return v;
-	}
+	} // End of onCreateView
 
 	private void updateWrongImage() {
 
@@ -180,10 +196,12 @@ public class QuizLiFragment extends Fragment {
 				.getWrongDrawableAnswerSuccessorOne();
 		int trhee = mQuestionBank.get(mCurrentIndex)
 				.getWrongDrawableAnswerTwo();
+		
 		mDrwPresident2 = getResources().getDrawable(two);
 		mDrwPresident3 = getResources().getDrawable(trhee);
-		mAnswerViewTwo.setImageDrawable(mDrwPresident2);
-		mAnswerViewThree.setImageDrawable(mDrwPresident3);
+		mAnswerViewButtonTwo.setImageDrawable(mDrwPresident2);
+		mAnswerViewButtonThree.setImageDrawable(mDrwPresident3);
+
 	}
 
 	private void updateQuestion() {
@@ -196,9 +214,58 @@ public class QuizLiFragment extends Fragment {
 	private void updatePresident() {
 		int pre = mQuestionBank.get(mCurrentIndex).getTrueDrawableAnswer();
 		mTrueDrwPresident1 = getResources().getDrawable(pre);
-		mAnswerViewOne.setImageDrawable(mTrueDrwPresident1);
+		mAnswerViewButtonOne.setImageDrawable(mTrueDrwPresident1);
 
 	}
+
+	private void getAlertWrongMessage() {
+
+		if (alertWorngAnswer != null && alertWorngAnswer.isShowing()) {
+			return;
+		} else {
+
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(
+					getActivity());
+			builder1.setMessage("Sorry Wrong Answer.");
+			builder1.setCancelable(false);
+			builder1.setPositiveButton("Back",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							mImageViewXwrongOrVrightAnswer
+									.setImageDrawable(null);
+							mImageView.setImageDrawable(getResources()
+									.getDrawable(R.drawable.question_mark));
+							dialog.cancel();
+
+						}
+					});
+
+			alertWorngAnswer = builder1.create();
+			alertWorngAnswer.show();
+		}
+
+	}
+
+	private void clearForTheNextQuestion() {
+
+		mNextImageButton.setVisibility(View.GONE);
+		mImageView.setImageDrawable(getResources().getDrawable(
+				R.drawable.question_mark));
+		mImageViewXwrongOrVrightAnswer.setImageDrawable(null);
+	};
+
+	private void setWrongAnswer() {
+		mWorngXanswer = getResources().getDrawable(R.drawable.wrong_x_answer);
+		mImageViewXwrongOrVrightAnswer.setImageDrawable(mWorngXanswer);
+	};
+
+	private void setAnimation() {
+
+		slide_in_left1 = AnimationUtils.loadAnimation(getActivity(),
+				android.R.anim.slide_in_left);
+		viewPresidentAnimator.setInAnimation(slide_in_left1);
+
+	};
 
 	public void onStart() {
 		super.onStart();

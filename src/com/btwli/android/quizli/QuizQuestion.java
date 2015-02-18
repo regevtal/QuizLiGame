@@ -11,17 +11,14 @@ public class QuizQuestion {
 	private int mWrongImageAnswerSuccessorOne;
 	private int mWrongImageAnswerTwo;
 	private int mTrueAnswerDescription;
-	private int mSuccessorDescription;
 
 	public QuizQuestion(int question, int trueDrawableAnswer,
-			int wrongImageAnswerOne, int wrongImageAnswerTwo, int description,
-			int successorDescription) {
+			int wrongImageAnswerOne, int wrongImageAnswerTwo, int description) {
 		mQuestion = question;
 		mTrueImageAnswer = trueDrawableAnswer;
 		mWrongImageAnswerSuccessorOne = wrongImageAnswerOne;
 		mWrongImageAnswerTwo = wrongImageAnswerTwo;
 		mTrueAnswerDescription = description;
-		mSuccessorDescription = successorDescription;
 		mId = UUID.randomUUID();
 	}
 
@@ -43,16 +40,6 @@ public class QuizQuestion {
 
 	public void setDescription(int description) {
 		mTrueAnswerDescription = description;
-	}
-	
-	
-
-	public int getSuccessorDescription() {
-		return mSuccessorDescription;
-	}
-
-	public void setSuccessorDescription(int successorDescription) {
-		mSuccessorDescription = successorDescription;
 	}
 
 	public boolean isTrueQuestion() {

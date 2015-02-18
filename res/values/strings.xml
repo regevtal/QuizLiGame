@@ -18,16 +18,11 @@
     <string name="successor_text_view">Is successor</string>
     <string name="president">president</string>
     <string name="successor">Successor</string>
-    <string name="next_on_the_list">Next President On The List</string>
+    <string name="next_on_the_list">Next President</string>
     <string name="james_madison_description">James Madison, Jr. was an American statesman, political theorist and the fourth President of the United States.</string>
     <string name="harry_truman_description">Harry S. Truman was the 33rd President of the United States. As the final running mate of President Franklin D. Roosevelt in 1944, Truman succeeded to the presidency on April 12, 1945, when Roosevelt died after months of declining health.</string>
     <string name="g_w_bush_description">George Herbert Walker Bush is an American retired politician who served as the 41st President of the United States.</string>
-    <string name="game_ruels">Hello to QuizLi!!!</string>
-    <string name="game_ruels2">Game rules are:</string>
-    <string name="game_ruels3">1: You have to complete all the questions.</string>
-    <string name="game_ruels4">2: No picking or cheating.</string>
-    <string name="game_ruels5">Information:</string>
-    <string name="game_ruels6">After answer one question you will be able to click on the picture for the more details.</string>
     <string name="game_ruels7">Enjoy the Game.</string>
-	<string name= "start_game">Start the Game</string>
+    <string name="start_game">Start the Game</string>
+
 </resources>

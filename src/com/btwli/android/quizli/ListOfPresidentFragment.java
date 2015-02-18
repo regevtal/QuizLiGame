@@ -20,16 +20,18 @@ public class ListOfPresidentFragment extends ListFragment {
 	private static final String TAG = "ListOfPresidentFragment";
 	private ArrayList<QuizQuestion> mPresidentList;
 	public static final String EXTRA_PRESIDENT_ID = "com.firstapp.android.picturealbum.president_id";
+	public static final String EXTRA_PRESIDENT_SCORE = "com.firstapp.android.picturealbum.score";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
+		
+
 
 		getActivity().setTitle(R.string.app_name);
 
 		mPresidentList = QuizLiLab.get(getActivity()).getQuizQuestions();
-
 		QuizAdapter adapter = new QuizAdapter(mPresidentList);
 		setListAdapter(adapter);
 
@@ -84,15 +86,6 @@ public class ListOfPresidentFragment extends ListFragment {
 			TextView presidentTextView = (TextView) convertView
 					.findViewById(R.id.president_text);
 			presidentTextView.setText(quiz.getDescription());
-
-			ImageView presidentSuccessorView = (ImageView) convertView
-					.findViewById(R.id.president_successor_image);
-			presidentSuccessorView.setImageDrawable(getResources().getDrawable(
-					quiz.getWrongDrawableAnswerSuccessorOne()));
-
-			TextView presidentSuccessorTextView = (TextView) convertView
-					.findViewById(R.id.president_successor_text);
-			presidentSuccessorTextView.setText(quiz.getSuccessorDescription());
 
 			return convertView;
 		}

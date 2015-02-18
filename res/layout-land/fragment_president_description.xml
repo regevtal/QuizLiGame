@@ -2,22 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/usa_list_flag"
     android:orientation="vertical" >
 
-    <ViewAnimator
-        android:id="@+id/view_animator_president"
+    <ImageView
+        android:id="@+id/president_image_description"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <ImageView
-            android:id="@+id/president_image_description"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/abc_ab_bottom_solid_light_holo" />
-
-    </ViewAnimator>
+        android:layout_height="250dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/abc_ab_bottom_solid_light_holo" />
 
     <TextView
         android:id="@+id/president_text_view_description"
@@ -25,8 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:text="@string/details"
-        android:textColor="#F4A460"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:textStyle="bold" />
 
 </LinearLayout>
